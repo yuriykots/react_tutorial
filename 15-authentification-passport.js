@@ -3,6 +3,8 @@ const passport = require("passport")
 const LocalStrategy = require("passport-local").Strategy
 // that's format for importing Local
 
+
+
 //We will start using LocalStrategy
 passport.use(new LocalStrategy(authenticate))
 //we will need to asycronictly check
@@ -23,7 +25,6 @@ passport.serializeUser(function(user, done){
   done(null, user.id)
 })
 
-//using session cookie to pull up information about user on server side. 
 passport.deserializeUser(function(id, done){
   db("users")
    .where("id", id)
@@ -31,6 +32,5 @@ passport.deserializeUser(function(id, done){
    .then((user) =>{
      done(null, user)
    })
-
 
 })
