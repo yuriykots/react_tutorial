@@ -1,22 +1,32 @@
 const express = require("express")
+const bodyParser = require("body-parser")
 const sessions = require("express-sessions")
 const passport = require("passport")
-
-//require out passpot file.
+const db = require("./db")
 require("/15-authentification-passport")
-// We need to add database configuration. We can do in separate file to keep server.js clean.
-
-
 
 express()
+  .set("view engine", "hjs")
+  .use(bodyParser.json())
+  .use(bodyParser.urlencoded({extended: false}))
   .use(session({secret: "I love dogs", resave: false, saveUninitialized: false}))
   .use(passport.initialize())
   .use(passport.session())
   .get("/", (req, res, next) => {
-    res.send(req.session)
+    res.send({
+
+    })
   })
-  .get("/set", (req, res, next) => {
-    req.session.name = "yuriy"
-    res.send(req.session)
+  .get("/login", (req, res, next)=>{
+    res.render("login")
+  })
+  .post("/login", passport.authenticate("local",{
+    successRedirect: "/",
+    failureRedirect: "/login",
+  }))
+  .get("/logout", (req, res, next) =>{
+    req.session.destroy((err) =>{
+      res.redirect("/login")
+    })
   })
   .listen(3000)
