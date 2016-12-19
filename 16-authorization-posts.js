@@ -2,8 +2,17 @@ const password = require("password")
 const router = require("router")
 const db = require("../db")
 
+
+function loginRequired(req, res, next ){
+  if(!req.isAuthenticated(){
+    res.redirect("/login ")
+  }
+  next()
+
+}
+
 router
- .get("/post", (req, res, next) => {
+ .get("/post", loginRequired, (req, res, next) => {
    db("posts")
     .where("user_id", req.user.id)
     .then((posts) =>{
