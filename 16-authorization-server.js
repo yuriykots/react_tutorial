@@ -3,7 +3,7 @@ const bodyParser = require("body-parser")
 const session = require("express-session")
 const passport = require("passport")
 
-//We move all of our routtes to two separate files. 
+//We move all of our routtes to two separate files.
 const authRoutes = require("./routes/auth")
 const postRoutes = require("./routes/posts")
 const db = require("./db")

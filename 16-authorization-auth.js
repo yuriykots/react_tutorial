@@ -6,7 +6,7 @@ router
    res.render("login")
  })
  .post("/login", passport.authenticate("local", {
-   successRedirect: "/",
+   successRedirect: "/posts",
    failureRedirect: "/login",
  })
  .get("/logout", (req, res, next ) =>{
@@ -18,9 +18,8 @@ router
    res.render("signup")
  })
  .post("/signup", passport.authenticate("local-register", {
-   successRedirect: "/",
+   successRedirect: "/posts",
    failureRedirect: "/signup"
  }))
 
  module.export = router
- 
