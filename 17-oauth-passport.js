@@ -16,8 +16,9 @@ passport.use(new GitHubStrategy({
   callBackURL: "htpp://127.0.0.1:3000/auth/github/callback"
 },
     function (accessToken, refreshToken, profile, done) {
-      User.findOrCreate({githubID: profile.id}, function (err,user) {
-        return done(err, user);
+      db("users")
+        .where("ouath-provider", "github")
+        .where("ouath_id", profile.username) 
       });
     }
 ))
