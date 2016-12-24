@@ -21,6 +21,7 @@ router
    successRedirect: "/posts",
    failureRedirect: "/signup"
  }))
+ //adding git-hub strategy. I can find this info on passport website
  .get("/auth/github", passport.authenticate("github", {scope: ["user:email"]}));
  .get("/auth/github/callback", passport.authenticate("github", {failureRedirect: "/login"}),
     function(req,res){
