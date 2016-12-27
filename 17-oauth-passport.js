@@ -18,9 +18,27 @@ passport.use(new GitHubStrategy({
     function (accessToken, refreshToken, profile, done) {
       db("users")
         .where("ouath-provider", "github")
-        .where("ouath_id", profile.username) 
-      });
-    }
+        .where("ouath_id", profile.username)
+        .first()
+        .then((user) => {
+          if(user){
+            return done(null, user)
+          }
+
+          const newUser = {
+            oauth_provider: "github",
+            oauth_id: profile.username,
+          };
+
+          return db("users")
+            .insert(newUser)
+            .then((ids) => {
+              newUser.id = ids[0]
+              done(null, newUser)
+            })
+
+      })
+    })
 ))
 
 //we will need to asycronictly check
