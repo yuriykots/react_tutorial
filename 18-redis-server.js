@@ -5,6 +5,7 @@ const RedisStore = require('connect-redis')(session)
 const passport = require("passport")
 const authRoutes = require("./routes/auth")
 const postRoutes = require("./routes/posts")
+const cash = require("./cash")
 const db = require("./db")
 require("./passport")
 
@@ -21,11 +22,14 @@ express()
  .use(passport.session())
  .use(authRoutes)
  .use(postRoutes)
- .get("/", (req, res, next) =>{
-   res.send({
-     session: req.session,
-     user: req.user,
-     authenticated: req.isAuthenticated(),
-   })
+ .get("/", cash.route({expire: 5, prefix: "home"}), (req, res, next) =>{
+   setTimeout(() =>{
+     const headlines = [
+       "Fushia is new black",
+       "What will Pacific Ocean do next?",
+       "Wall street to build even more walls"
+     ];
+     res.render("headlines", {headlines: headniles})
+   }, 2000)
  })
  .listen(3000)
