@@ -1,5 +1,5 @@
 exports.up = function(knex, Promise){
-  return knex.raw('
+  return knex.raw(
     Create TABLE users(
       id int(11) unsignet NOT NULL AUTO_INCREMENT,
       email varchar(255) DEFAULT NULL,
@@ -11,7 +11,7 @@ exports.up = function(knex, Promise){
       oauth_id varchar(255) DEFAULT NULL,
       PRIMARY KEY (id)
     ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
-  ')
+  )
 };
 
 exports.down = function(knex, Promise){
