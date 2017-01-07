@@ -21,4 +21,14 @@ express()
         }
       )
   })
+  .get("/updateLastName/:lastname/:newLastName", (req,res,next) =>{
+    mongo.db.collection("users")
+      .updateOne(
+        {email: req.params.lastname},
+        {$set: {email: req.params.lastname}},
+        (err, result) => {
+          res.send(result)
+        }
+      )
+  })
   .listen(3000)
