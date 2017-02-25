@@ -1,34 +1,10 @@
-import { computed, observable } from "mobx"
+import {observable} from "mobx"
 
-//creating class that will have obeservable values. so if anything change we will get rerender
-class Todo {
-  @observable value
-  @observable id
-  @observable complete
-
-  constructor(value) {
-    this.value = value
-    this.id = Date.now()
-    this.complete = false
-  }
+class TodoStore {
+  @observable todos = ["buy milk", "buy eggs"]
+  @observable filter =""
 }
 
-export class TodoStore {
-  @observable todos = []
-  @observable filter = ""
-  @computed get filteredTodos() {
-    var matchesFilter = new RegExp(this.filter, "i")
-    return this.todos.filter(todo => !this.filter || matchesFilter.test(todo.value))
-  }
+var store = window.store = new TodoStore
 
-  createTodo(value) {
-    this.todos.push(new Todo(value))
-  }
-
-  clearComplete = () => {
-    const incompleteTodos = this.todos.filter(todo => !todo.complete)
-    this.todos.replace(incompleteTodos)
-  }
-}
-
-export default new TodoStore
+export default store
