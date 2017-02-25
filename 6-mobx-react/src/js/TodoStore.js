@@ -1,5 +1,6 @@
 import { computed, observable } from "mobx"
 
+//creating class that will have obeservable values. so if anything change we will get rerender
 class Todo {
   @observable value
   @observable id
@@ -31,4 +32,3 @@ export class TodoStore {
 }
 
 export default new TodoStore
-
