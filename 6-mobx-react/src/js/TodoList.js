@@ -5,13 +5,29 @@ import {observer} from "mobx-react"
 
 //We passing a store from main.js
 //Values in our store are observable, they will fire all this change events.
-//React listen to state of the compoent and then rerender when is a change
+//React listen to state of the compoent and then rerender when is a change.
 //Now observer is listen to all observables and rerender component if there is any change
-//Our store is observable values in our store is event emitters,
+//Our store has observable values, that are event emitters.
 //Observer in our component is a event listener and it tragers react rerender.
+
 @observer
 export default class TodoList extends React.Component {
+    filter(e){
+      
+      this.props.store.filter = e.target.value
+    }
     render(){
-      return <h1>{this.props.store.todos[0]} </h1>
+      const {todos, filter} = this.props.store
+      //using map method on array of todos to create list.
+      const todoLis = todos.map(todo => (
+        <li> {todo} </li>
+      ))
+      return <div>
+
+      <h2> todos: </h2>
+        {filter}
+      <input className="filter" value={filter} onChange={this.filter.bind(this)} />
+      <ul> {todoLis} </ul>
+      </div>
     }
 }
