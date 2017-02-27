@@ -12,20 +12,25 @@ import {observer} from "mobx-react"
 
 @observer
 export default class TodoList extends React.Component {
+    createNew(e) {
+      if(e.which === 13){
+        this.props.store.createTodo(e.target.value)
+        e.target.value = ""
+      }
+    }
     filter(e){
-      
       this.props.store.filter = e.target.value
     }
     render(){
-      const {todos, filter} = this.props.store
+      const {todos, filter, filteredTodos} = this.props.store
       //using map method on array of todos to create list.
-      const todoLis = todos.map(todo => (
+      const todoLis = filteredTodos.map(todo => (
         <li> {todo} </li>
       ))
       return <div>
 
       <h2> todos: </h2>
-        {filter}
+      <input className="create" onKeyPress={this.createNew.bind(this)} />
       <input className="filter" value={filter} onChange={this.filter.bind(this)} />
       <ul> {todoLis} </ul>
       </div>
