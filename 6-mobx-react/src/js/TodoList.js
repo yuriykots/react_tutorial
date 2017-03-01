@@ -21,11 +21,15 @@ export default class TodoList extends React.Component {
     filter(e){
       this.props.store.filter = e.target.value
     }
+    toggleComplete(todo) {
+      todo.comlete = !todo.complete
+    }
     render(){
       const {todos, filter, filteredTodos} = this.props.store
       //using map method on array of todos to create list.
       const todoLis = filteredTodos.map(todo => (
-        <li> {todo} </li>
+        <li key={todo.id}>
+        <input type="checkbox"  checked={todo.complete} onChange={this.toggleComplete.bind(this, todo)} value={todo.complete} />{todo.value} </li>
       ))
       return <div>
 
