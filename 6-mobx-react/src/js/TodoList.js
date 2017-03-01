@@ -22,10 +22,11 @@ export default class TodoList extends React.Component {
       this.props.store.filter = e.target.value
     }
     toggleComplete(todo) {
-      todo.comlete = !todo.complete
+      todo.complete = !todo.complete
+      console.log("toggleComplete is fired" + todo.complete)
     }
     render(){
-      const {todos, filter, filteredTodos} = this.props.store
+      const {todos, filter, filteredTodos, clearComplete} = this.props.store
       //using map method on array of todos to create list.
       const todoLis = filteredTodos.map(todo => (
         <li key={todo.id}>
@@ -37,6 +38,7 @@ export default class TodoList extends React.Component {
       <input className="create" onKeyPress={this.createNew.bind(this)} />
       <input className="filter" value={filter} onChange={this.filter.bind(this)} />
       <ul> {todoLis} </ul>
+      <a href="#" onClick={clearComplete}> Clear Complete </a>
       </div>
     }
 }

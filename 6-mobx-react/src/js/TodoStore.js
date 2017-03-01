@@ -1,5 +1,11 @@
 import {computed, observable} from "mobx"
 
+
+//Before we had an array of todos. But we want to store more information.
+//We want an object fro every todo that will have value, id and complete status
+//To do this we are creating a constructor.
+//Every value inside this todo object will be observable.
+
 class Todo {
   @observable value
   @observable id
@@ -23,11 +29,25 @@ class TodoStore {
 
   @computed get filteredTodos(){
     var matchesFilter = new RegExp(this.filter, "i")
-    return this.todos.filter(todo => !this.filter || matchesFilter.test(todo))
+    return this.todos.filter(todo => !this.filter || matchesFilter.test(todo.value))
   }
   createTodo(value){
+
+    //We are pushing new todo to a array. It will be new todo object that we are creating with
+    //our class and constructor function.
     this.todos.push(new Todo(value))
   }
+
+  clearComplete = () => {
+    const incompleteTodos = this.todos.filter(todo => !todo.complete)
+    this.todos.replace(incompleteTodos)
+  }
+
+
+
+
+
+
 }
 
 
